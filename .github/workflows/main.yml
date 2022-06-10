@@ -33,13 +33,6 @@ jobs:
 
   molecule:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        scenario:
-          - centos-7
-          - debian-10
-          - ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -50,6 +43,5 @@ jobs:
         with:
           molecule_options: --debug
           molecule_command: test
-          molecule_args: --scenario-name ${{ matrix.scenario }}
         env:
           ANSIBLE_FORCE_COLOR: "1"
