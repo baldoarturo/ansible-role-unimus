@@ -7,10 +7,9 @@ on:
 
 defaults:
   run:
-    working-directory: 'baldoarturo.unimus'
+    working-directory: "baldoarturo.unimus"
 
 jobs:
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -18,12 +17,12 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
-          path: 'baldoarturo.unimus'
+          path: "baldoarturo.unimus"
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install test dependencies.
         run: pip3 install yamllint
@@ -33,34 +32,24 @@ jobs:
           yamllint .
 
   molecule:
-    name: Molecule
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        distro:
-          - centos7
-          - ubuntu2004
-          - debian10
-
+        scenario:
+          - centos-7
+          - debian-10
+          - ubuntu-20.04
     steps:
-      - name: Check out the codebase.
+      - name: Checkout
         uses: actions/checkout@v2
         with:
-          path: 'baldoarturo.unimus'
-
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
+          path: "${{ github.repository }}"
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
         with:
-          python-version: '3.x'
-
-      - name: Install test dependencies.
-        run: pip3 install ansible molecule[docker] docker
-
-      - name: Run Molecule tests.
-        run: molecule test
-        with:
-         molecule_options: --debug
+          molecule_options: --debug
+          molecule_command: test
+          molecule_args: --scenario-name ${{ matrix.scenario }}
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          MOLECULE_DISTRO: ${{ matrix.distro }}
+          ANSIBLE_FORCE_COLOR: "1"
