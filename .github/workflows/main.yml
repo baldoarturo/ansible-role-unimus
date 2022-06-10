@@ -36,3 +36,4 @@ jobs:
         with:
           image: "${{ matrix.image }}"
           options: parallel
+          command: "--debug test"
