@@ -5,35 +5,27 @@ on:
   - push
 
 jobs:
-  # lint:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - name: checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         path: "${{ github.repository }}"
-  #     - name: molecule
-  #       uses: robertdebock/molecule-action@4.0.8
-  #       with:
-  #         command: lint
-  test:
-    # needs:
-    #   - lint
-    runs-on: ubuntu-20.04
+  molecule:
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        image:
-          # - debian
-          # - centos
-          - ubuntu
+        scenario:
+          # - centos-8
+          # - debian-10
+          # - fedora-34
+          # - oraclelinux-8
+          - ubuntu-20.04
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           path: "${{ github.repository }}"
-      - name: molecule
-        uses: robertdebock/molecule-action@4.0.8
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
         with:
-          image: "${{ matrix.image }}"
-          options: parallel
-          command: "--debug test"
+          molecule_options: --debug --base-config molecule/_shared/base.yml
+          molecule_command: test
+          molecule_args: --scenario-name ${{ matrix.scenario }}
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
