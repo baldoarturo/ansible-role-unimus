@@ -1,7 +1,9 @@
 Role Name
 =========
 
-This role install Unimus in
+This role install Unimus Network Automation by NetCore jsa.
+
+Find out more about Unimus in https://unimus.net/
 
 Requirements
 ------------
@@ -47,7 +49,7 @@ Example Playbook
 
   roles:
     - geerlingguy.mysql
-    - unimus
+    - baldoarturo.unimus
 ```
 
 License
@@ -58,4 +60,4 @@ BSD
 Author Information
 ------------------
 
-Feel free to reach out on Github or arturobaldo.com.ar
+Feel free to reach out on GitHub or https://arturobaldo.com.ar
