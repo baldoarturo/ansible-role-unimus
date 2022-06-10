@@ -11,4 +11,4 @@
   tasks:
     - name: "Include unimus"
       include_role:
-        name: "unimus"
+        name: unimus
