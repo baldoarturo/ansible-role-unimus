@@ -1,0 +1,11 @@
+[Unit]
+Description=Unimus
+
+[Service]
+WorkingDirectory=/opt/unimus
+ExecStart=/usr/bin/java -Xms{{java_xms}} -Xmx{{java_xmx}} -jar /opt/unimus/Unimus-{{unimus_version}}.jar
+User=unimus
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

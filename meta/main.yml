@@ -1,0 +1,25 @@
+galaxy_info:
+  author: Arturo Baldo
+  description: Unimus Role
+  company: ibitec
+  role_name: unimus
+  namespace: ibitec
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: '2.1'
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+    - name: EL
+      versions:
+        - "7"
+    - name: Debian
+      versions:
+        - buster
+
+  galaxy_tags:
+    - unimus
+    - network automation

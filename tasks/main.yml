@@ -1,0 +1,39 @@
+---
+- name: Install openjdk-11-jre-headless
+  package:
+    name: openjdk-11-jre-headless
+    state: present
+
+- name: Create unimus user
+  user:
+    name: unimus
+    home: /opt/unimus
+    create_home: yes
+    state: present
+
+- name: Create Unimus folders
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: unimus
+    group: unimus
+  loop:
+    - "/var/log/unimus/"
+    - "/etc/unimus"
+
+- name: Download Unimus
+  get_url:
+    url: https://download.unimus.net/unimus/{{unimus_version}}/Unimus.jar
+    dest: /opt/unimus/Unimus-{{unimus_version}}.jar
+
+- name: Create Unimus service
+  template:
+    src: unimus.service
+    dest: /etc/systemd/system/unimus.service
+
+- name: Enable and restart Unimus service
+  systemd:
+    name: unimus.service
+    state: restarted
+    enabled: yes
+    daemon_reload: yes

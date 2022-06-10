@@ -1,0 +1,47 @@
+# ---
+# dependency:
+#   name: galaxy
+# driver:
+#   name: docker
+# platforms:
+#   - name: instance
+#     image: quay.io/centos/centos:stream8
+#     pre_build_image: true
+# provisioner:
+#   name: ansible
+# verifier:
+#   name: ansible
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: ubuntu-20
+    hostname: ubuntu-20
+    image: mpaivabarbosa/molecule-systemd-ubuntu:20.04
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    override_command: false
+  - name: debian-10
+    hostname: debian-10
+    image: mpaivabarbosa/molecule-systemd-ubuntu:20.04
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    override_command: false
+  - name: centos-7
+    hostname: centos-7
+    image: mpaivabarbosa/molecule-systemd-centos:7
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    override_command: false
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

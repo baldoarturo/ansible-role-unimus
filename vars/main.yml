@@ -1,0 +1,10 @@
+---
+# vars file for unimus
+unimus_version: '2.2.2'
+mysql_root_password: supersecret
+mysql_database: unimus
+mysql_user: unimus
+mysql_password: secret
+TZ: America/New_York
+java_xmx: 1024M
+java_xms: 256M
