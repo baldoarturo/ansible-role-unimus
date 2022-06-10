@@ -1,47 +1,39 @@
 ---
 name: CI
-on:
-  push:
-    branches:
-      - main
 
-defaults:
-  run:
-    working-directory: "baldoarturo.unimus"
+on:
+  - push
 
 jobs:
   lint:
-    name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - name: Check out the codebase.
-        uses: actions/checkout@v2
-        with:
-          path: "baldoarturo.unimus"
-
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.x"
-
-      - name: Install test dependencies.
-        run: pip3 install yamllint
-
-      - name: Lint code.
-        run: |
-          yamllint .
-
-  molecule:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
         with:
           path: "${{ github.repository }}"
-      - name: Molecule
-        uses: gofrolist/molecule-action@v2
+      - name: molecule
+        uses: robertdebock/molecule-action@4.0.8
         with:
-          molecule_options: --debug
-          molecule_command: test
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+          command: lint
+  test:
+    needs:
+      - lint
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        image:
+          # - debian
+          # - centos
+          - ubuntu
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule
+        uses: robertdebock/molecule-action@4.0.8
+        with:
+          image: "${{ matrix.image }}"
+          options: parallel
+          scenario: my_specific_scenario
