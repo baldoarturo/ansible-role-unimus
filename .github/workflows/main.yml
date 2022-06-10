@@ -58,6 +58,8 @@ jobs:
 
       - name: Run Molecule tests.
         run: molecule test
+        with:
+         molecule_options: --debug
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
