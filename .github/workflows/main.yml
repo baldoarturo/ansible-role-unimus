@@ -5,20 +5,20 @@ on:
   - push
 
 jobs:
-  lint:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          path: "${{ github.repository }}"
-      - name: molecule
-        uses: robertdebock/molecule-action@4.0.8
-        with:
-          command: lint
+  # lint:
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         path: "${{ github.repository }}"
+  #     - name: molecule
+  #       uses: robertdebock/molecule-action@4.0.8
+  #       with:
+  #         command: lint
   test:
-    needs:
-      - lint
+    # needs:
+    #   - lint
     runs-on: ubuntu-20.04
     strategy:
       matrix:
